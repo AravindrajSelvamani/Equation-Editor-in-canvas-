@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+     <script src="/js/layout.js"></script>
+     <script src="/js/EquationConversion.js"></script>
+    <style>
+    .mymodalbox {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+    </style>
+</head>
+
+<body>
+     <button class="btn btn-primary" onclick="OpenEquationEditor()" id="btnopeneqeditor">Equation editor</button>
+     <div id="canvasEditor" style="border: 1px solid grey;width: 1000px;height: 550px;margin-left: 175px;">
+<canvas id="canvas2" width="1000" height="550" style="width: 1000px;height: 550px"></canvas>
+     </div>
+     
+      <!-- Modal -->
+  <div class="mymodalbox">
+     <div class="modal-dialog">
+     
+       <!-- Modal content-->
+       <div class="modal-content">
+         <div class="modal-header" style="background-color: gray">
+           <button type="button" style="color:white" onclick="closeEquationEditor()" class="close" data-dismiss="modal">&times;</button>
+           <h4 class="modal-title" style="color:white">Equation editor</h4>
+         </div>
+         <div class="modal-body">
+          <iframe id="eqiframe" style="width: 577px;height: 323px;" src="/wiris_plugin/index.html" ></iframe>
+         </div>
+         <div class="modal-footer" style="background-color: gray">
+          <button type="button" class="btn btn-success" onclick="writeSvgInCanvas()" >submit</button> <button onclick="closeEquationEditor()" type="button" class="btn btn-danger" >Close</button>
+         </div>
+       </div>
+       
+     </div>
+   </div>
+
+   <script>
+function OpenEquationEditor(){
+  if(mySel !=null)
+  {
+    if(mySel.getMathml !=null)
+    {
+  document.querySelector('#eqiframe').contentWindow.editor.setMathML(mySel.getMathml)
+    }
+    else{
+      document.querySelector('#eqiframe').contentWindow.editor.setMathML('<math xmlns="http://www.w3.org/1998/Math/MathML"></math>')
+    }
+  document.querySelector('.mymodalbox').style.display="block";
+  }
+  else{
+    alert('please select the box and then open editor..')
+  }
+}
+function closeEquationEditor(){
+  document.querySelector('.mymodalbox').style.display="none";
+}
+
+   </script>
+</body>
+</html>
